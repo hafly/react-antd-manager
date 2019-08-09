@@ -42,8 +42,6 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
-const lessRegex = /\.less$/;
-const lessModuleRegex = /\.module\.less$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -354,7 +352,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
-                  ['import', { libraryName: 'antd', style: 'css' }],
+                  ['import', { libraryName: 'antd', style: true }],
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -457,28 +455,46 @@ module.exports = function(webpackEnv) {
 
             // less
             {
-              test: lessRegex,
-              exclude: lessModuleRegex,
-              use: getStyleLoaders(
+              test: /\.less$/,
+              use: [
+                require.resolve('style-loader'),
                 {
-                  importLoaders: 2,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                  },
                 },
-                'less-loader'
-              ),
-              sideEffects: true,
-            },
-            {
-              test: lessModuleRegex,
-              use: getStyleLoaders(
                 {
-                  importLoaders: 2,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent,
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes')({
+                      autoprefixer:{
+                        browsers: [
+                          '>1%',
+                          'last 4 versions',
+                          'Firefox ESR',
+                          'not ie < 9', // React doesn't support IE8 anyway
+                        ],
+                        flexbox: 'no-2009',
+                      }})
+                    ],
+                  },
                 },
-                'less-loader'
-              ),
+                {
+                  loader:require.resolve('less-loader'),
+                  options: {
+                    modules: false,
+                    javascriptEnabled: true,
+                    modifyVars: {
+                      "@primary-color": "#f9c700"
+                    }
+                  }
+                }
+              ],
             },
 
             // "file" loader makes sure those assets get served by WebpackDevServer.
