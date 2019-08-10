@@ -9,17 +9,25 @@ export default class LayoutHeader extends React.Component {
     state = {};
 
     componentWillMount() {
+        let self = this;
+
         this.setState({
             userName: '栉风沐雨'
         });
 
-        setInterval(() => {
-            let sysTime = Util.formatDate(new Date().getTime());
-            this.setState({
-                sysTime
-            })
-        }, 1000);
+        this.setSysTime();
         this.getWeatherAPIData();
+
+        setInterval(() => {
+            self.setSysTime();
+        }, 1000);
+    }
+
+    setSysTime() {
+        let sysTime = Util.formatDate(new Date().getTime());
+        this.setState({
+            sysTime
+        });
     }
 
     getWeatherAPIData() {

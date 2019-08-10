@@ -2,7 +2,9 @@ import React from 'react';
 import {Layout,Breadcrumb} from 'antd';
 import LayoutMenu from './components/LayoutMenu';
 import LayoutHeader from './components/LayoutHeader';
-import './admin.less';
+import LayoutFooter from './components/LayoutFooter';
+import './style/admin.less';
+import Home from './pages/home';
 
 const {Content} = Layout;
 
@@ -18,7 +20,8 @@ export default class Admin extends React.Component {
                     {/*头部*/}
                     <LayoutHeader/>
 
-                    <Breadcrumb style={{ margin: '16px 0' }}>
+                    {/*面包屑*/}
+                    <Breadcrumb className="ant-breadcrumb">
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
                         <Breadcrumb.Item>List</Breadcrumb.Item>
                         <Breadcrumb.Item>App</Breadcrumb.Item>
@@ -26,8 +29,11 @@ export default class Admin extends React.Component {
 
                     {/*主要内容*/}
                     <Content className="ant-layout-content">
-                        Content
+                        <Home/>
                     </Content>
+
+                    {/*底部*/}
+                    <LayoutFooter/>
                 </Layout>
 
             </Layout>
