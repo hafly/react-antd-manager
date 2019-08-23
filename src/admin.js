@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout, Breadcrumb} from 'antd';
 import LayoutMenu from './components/LayoutMenu';
 import LayoutHeader from './components/LayoutHeader';
-// import LayoutFooter from './components/LayoutFooter';
+import LayoutFooter from './components/LayoutFooter';
 import './style/admin.less';
 
 const {Content} = Layout;
@@ -14,7 +14,7 @@ export default class Admin extends React.Component {
                 {/*目录*/}
                 <LayoutMenu/>
 
-                <Layout style={{height: '100vh', overflowY: 'auto'}}>
+                <Layout style={{minHeight: '100vh', overflowY: 'auto'}}>
                     {/*头部*/}
                     <LayoutHeader/>
 
@@ -31,7 +31,7 @@ export default class Admin extends React.Component {
                     </Content>
 
                     {/*底部*/}
-                    {/*<LayoutFooter/>*/}
+                    <LayoutFooter/>
                 </Layout>
 
             </Layout>
