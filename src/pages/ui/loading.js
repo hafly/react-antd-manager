@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Spin, Icon, Alert, Switch} from 'antd';
 import './ui.less';
 
-export default class Loadings extends React.Component {
+export default class pageLoading extends React.Component {
     state = {loading: false}
 
     toggle = (value) => {

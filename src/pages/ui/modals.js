@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Button, Modal} from 'antd';
 import './ui.less';
 
-export default class Modals extends React.Component {
+export default class pageModal extends React.Component {
     state = {
         showModal1: false,
         showModal2: false,
