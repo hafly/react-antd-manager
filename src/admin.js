@@ -1,22 +1,20 @@
 import React from 'react';
-import {Layout,Breadcrumb} from 'antd';
+import {Layout, Breadcrumb} from 'antd';
 import LayoutMenu from './components/LayoutMenu';
 import LayoutHeader from './components/LayoutHeader';
-import LayoutFooter from './components/LayoutFooter';
+// import LayoutFooter from './components/LayoutFooter';
 import './style/admin.less';
-import Home from './pages/home';
 
 const {Content} = Layout;
 
 export default class Admin extends React.Component {
-
     render() {
         return (
             <Layout>
                 {/*目录*/}
                 <LayoutMenu/>
 
-                <Layout>
+                <Layout style={{height: '100vh', overflowY: 'auto'}}>
                     {/*头部*/}
                     <LayoutHeader/>
 
@@ -29,11 +27,11 @@ export default class Admin extends React.Component {
 
                     {/*主要内容*/}
                     <Content className="ant-layout-content">
-                        <Home/>
+                        {this.props.children}
                     </Content>
 
                     {/*底部*/}
-                    <LayoutFooter/>
+                    {/*<LayoutFooter/>*/}
                 </Layout>
 
             </Layout>
