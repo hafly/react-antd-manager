@@ -21,5 +21,24 @@ export default {
         for (let k in o)
             if (new RegExp("(" + k + ")").test(format)) format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return format;
+    },
+    /**
+     * 分页
+     * @param data
+     * @param callback
+     */
+    pagination(data, callback) {
+        return {
+            onChange: (current) => {
+                callback(current)
+            },
+            current: data.page,
+            size: data.size,
+            total: data.total,
+            showTotal: () => {
+                return `共${data.total}条`;
+            },
+            showQuickJumper: true
+        }
     }
 }
