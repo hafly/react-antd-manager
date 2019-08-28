@@ -6,6 +6,7 @@ import utils from "../../utils/utils";
 export default class BasicTable extends React.Component {
     state = {
         loading: true,
+        dataSource: [],
         dataSource2: [],
         selectedRowKeys: [],    // 单选选中key
         selectedItem: {},       // 单选选中对象
@@ -187,6 +188,7 @@ export default class BasicTable extends React.Component {
                 })
             }
         }
+        let self = this;
         return (
             <div>
                 <Card title="基础表格">
@@ -212,8 +214,8 @@ export default class BasicTable extends React.Component {
                             rowSelection={rowSelection}
                             onRow={(record, index) => {
                                 return {
-                                    onClick: () => {
-                                        this.onRowClick(record, index)
+                                    onClick() {
+                                        self.onRowClick(record, index)
                                     }
                                 }
                             }}
