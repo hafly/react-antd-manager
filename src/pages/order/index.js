@@ -83,10 +83,12 @@ export default class Order extends React.Component {
             data: {
                 id: 1
             }
-        }).then((res) => {
+        }).then(() => {
             message.success('订单结束成功');
             this.setState({
-                orderConfirmVisible: false
+                orderConfirmVisible: false,
+                selectedItem: {},
+                selectedRowKeys:[]
             });
             this.request();
         });
@@ -99,6 +101,18 @@ export default class Order extends React.Component {
             selectedRowKeys: selectKey,
             selectedItem: record
         })
+    }
+
+    openOrderDetail = () => {
+        let item = this.state.selectedItem;
+        if (!item.id) {
+            Modal.warn({
+                title: '信息',
+                content: '请选择一条订单进行操作'
+            });
+            return
+        }
+        window.open(`/#/common/order/detail/${item.id}`);
     }
 
     render() {
@@ -168,7 +182,7 @@ export default class Order extends React.Component {
                     <FilterForm/>
                 </Card>
                 <Card style={{marginTop: 10, borderBottom: 0}}>
-                    <Button>订单详情</Button>
+                    <Button onClick={this.openOrderDetail}>订单详情</Button>
                     <Button style={{marginLeft: 10}} onClick={this.handleFinish}>结束订单</Button>
                 </Card>
                 <Card>

@@ -33,7 +33,6 @@ export default class Admin extends React.Component {
                     {/*底部*/}
                     <LayoutFooter/>
                 </Layout>
-
             </Layout>
         );
     }

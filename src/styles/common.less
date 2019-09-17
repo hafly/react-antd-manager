@@ -1,0 +1,35 @@
+@import './default';
+
+ul,li{
+  list-style: none;
+}
+.clearfix{
+  &::after{
+    content:' ';
+    clear:both;
+    display: block;
+    visibility: hidden;
+  }
+}
+
+.simple-page {
+  .header-top {
+    background: #1890ff;
+    color: @color-white;
+    .ant-layout-logo {
+      float: left;
+      padding-left: 0;
+      background: transparent;
+      h1{
+        color: #ffffff;
+      }
+    }
+    a {
+      color: #ffffff;
+    }
+  }
+
+  .container{
+    padding: 24px 16px;
+  }
+}

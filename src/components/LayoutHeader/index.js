@@ -46,15 +46,23 @@ export default class LayoutHeader extends React.Component {
     }
 
     render() {
+        const menuType = this.props.menuType;
         return (
             <Header className="ant-layout-header">
                 <div className="header-top">
+                    {
+                        menuType ?
+                            <span className="ant-layout-logo">
+                                <img src="/assets/logo-ant.svg" alt=""/>
+                                <h1>Ant Design</h1>
+                            </span> : ''
+                    }
                     <span>
                         <span>
                             {this.state.sysTime}
                         </span>
                         <span style={{marginLeft: '10px'}}>
-                            <img src={this.state.dayPictureUrl} alt="" style={{height: '18px', paddingBottom: '4px'}}/>
+                            <img src={this.state.dayPictureUrl} alt="" style={{height: 18, paddingBottom: 4}}/>
                         </span>
                         <span>
                             {this.state.weather}
