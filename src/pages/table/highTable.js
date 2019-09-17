@@ -18,7 +18,8 @@ export default class BasicTable extends React.Component {
         this.request();
     }
 
-    request = () => {
+    request() {
+        let self = this;
         this.setState({
             loading: true
         });
@@ -27,8 +28,8 @@ export default class BasicTable extends React.Component {
             data: {
                 page: this.params.page
             }
-        }).then((data) => {
-            let self = this;
+        }).then((res) => {
+            let data = res.data;
             data.rows.map((item, index) => {
                 return item.key = index;
             });
@@ -135,19 +136,19 @@ export default class BasicTable extends React.Component {
             {
                 title: 'id',
                 dataIndex: 'id',
-                width: 80,
+                width: 100,
                 fixed: 'left'
             },
             {
                 title: '用户名',
                 dataIndex: 'userName',
-                width: 80,
+                width: 100,
                 fixed: 'left'
             },
             {
                 title: '性别',
                 dataIndex: 'sex',
-                width: 80,
+                width: 100,
                 render(sex) {
                     return sex === 1 ? '男' : '女'
                 }
@@ -170,7 +171,7 @@ export default class BasicTable extends React.Component {
             {
                 title: '爱好',
                 dataIndex: 'interest',
-                width: 80,
+                width: 100,
                 render(interest) {
                     let config = {
                         '1': '游泳',
@@ -187,46 +188,53 @@ export default class BasicTable extends React.Component {
             },
             {
                 title: '生日',
-                width: 120,
+                width: 200,
                 dataIndex: 'birthday'
             },
             {
                 title: '生日',
-                width: 120,
+                width: 200,
                 render() {
                     return '2000-01-01'
                 }
             },
             {
                 title: '生日',
-                width: 120,
+                width: 200,
                 render() {
                     return '2000-01-01'
                 }
             },
             {
                 title: '生日',
-                width: 120,
+                width: 200,
                 render() {
                     return '2000-01-01'
                 }
             },
             {
                 title: '生日',
-                width: 120,
+                width: 200,
+                render() {
+                    return '2000-01-01'
+                }
+            },
+            {
+                title: '生日',
+                width: 200,
                 render() {
                     return '2000-01-01'
                 }
             },
             {
                 title: '地址',
-                width: 120,
+                width: 200,
                 dataIndex: 'address'
             },
             {
                 title: '早起时间',
                 dataIndex: 'time',
-                width: 80,
+                width: 100,
                 fixed: 'right'
             }
         ]
@@ -253,7 +261,7 @@ export default class BasicTable extends React.Component {
                 title: '年龄',
                 dataIndex: 'age',
                 width: 80,
-                sorter(a, b){
+                sorter(a, b) {
                     return a.age - b.age;
                 },
                 sortOrder: this.state.sortOrder
@@ -387,7 +395,6 @@ export default class BasicTable extends React.Component {
         return (
             <Spin spinning={this.state.loading}>
                 <Card title="头部固定">
-
                     <Table
                         bordered
                         columns={columns}
@@ -395,7 +402,6 @@ export default class BasicTable extends React.Component {
                         pagination={false}
                         scroll={{y: 360}}
                     />
-
                 </Card>
                 <Card title="左侧固定" style={{marginTop: 10}}>
                     <Table
@@ -403,7 +409,7 @@ export default class BasicTable extends React.Component {
                         columns={columns2}
                         dataSource={this.state.dataSource}
                         pagination={false}
-                        scroll={{x: 1220}}
+                        scroll={{x: 2000}}
                     />
                 </Card>
                 <Card title="表格排序" style={{marginTop: 10}}>

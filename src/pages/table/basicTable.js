@@ -60,7 +60,8 @@ export default class BasicTable extends React.Component {
         this.request();
     }
 
-    request = () => {
+    request() {
+        let self = this;
         this.setState({
             loading: true
         });
@@ -69,8 +70,8 @@ export default class BasicTable extends React.Component {
             data: {
                 page: this.params.page
             }
-        }).then((data) => {
-            let self = this;
+        }).then((res) => {
+            let data = res.data;
             data.rows.map((item, index) => {
                 return item.key = index;
             });
@@ -173,11 +174,13 @@ export default class BasicTable extends React.Component {
                 title: '早起时间',
                 dataIndex: 'time'
             }
-        ]
+        ];
+
         const rowSelection = {
             type: 'radio',
             selectedRowKeys: this.state.selectedRowKeys
         }
+
         const rowCheckSelection = {
             type: 'checkbox',
             selectedRowKeys: this.state.selectedRowKeys2,
@@ -188,6 +191,7 @@ export default class BasicTable extends React.Component {
                 })
             }
         }
+
         let self = this;
         return (
             <div>

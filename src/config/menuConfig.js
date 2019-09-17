@@ -69,25 +69,25 @@ const menuList = [
             }
         ]
     },
-    {
-        title: '富文本',
-        key: '/rich'
-    },
+    // {
+    //     title: '富文本',
+    //     key: '/rich'
+    // },
     {
         title: '城市管理',
-        key: '/city'
+        key: '/admin/city'
     },
     {
         title: '订单管理',
-        key: '/order',
+        key: '/admin/order',
         btnList: [
             {
                 title: '订单详情',
-                key: 'detail'
+                key: '/admin/order/detail'
             },
             {
                 title: '结束订单',
-                key: 'finish'
+                key: '/admin/order/finish'
             }
         ]
     },

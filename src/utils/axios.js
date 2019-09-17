@@ -20,7 +20,7 @@ export default class Axios {
     }
 
     static ajax(options) {
-        let baseURL = 'https://www.easy-mock.com/mock/5d607b15bf22c858eca714cb/manager';
+        let baseURL = ' http://127.0.0.1:7300/mock/5d761d1bf44f481c68a6282d/manager';
         return new Promise((resolve, reject) => {
             axios({
                 baseURL: baseURL,
@@ -32,7 +32,7 @@ export default class Axios {
                 if (response.status === 200) {
                     let res = response.data
                     if (res.status === 1) {
-                        resolve(res.data);
+                        resolve(res);
                     }
                     else {
                         Modal.error({

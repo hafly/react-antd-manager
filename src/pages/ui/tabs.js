@@ -3,6 +3,7 @@ import {Card, Tabs, message, Icon} from 'antd';
 import './ui.less';
 
 const {TabPane} = Tabs;
+
 export default class pageTabs extends React.Component {
     newTabIndex = 0;
 

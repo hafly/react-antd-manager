@@ -3,7 +3,7 @@ import {Layout, Breadcrumb} from 'antd';
 import LayoutMenu from './components/LayoutMenu';
 import LayoutHeader from './components/LayoutHeader';
 import LayoutFooter from './components/LayoutFooter';
-import './style/admin.less';
+import './styles/admin.less';
 
 const {Content} = Layout;
 

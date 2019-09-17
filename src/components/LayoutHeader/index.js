@@ -1,6 +1,6 @@
 import React from 'react';
 import {Layout} from 'antd';
-import Util from '../../utils/utils';
+import utils from '../../utils/utils';
 import axios from '../../utils/axios';
 import './index.less';
 
@@ -24,7 +24,7 @@ export default class LayoutHeader extends React.Component {
     }
 
     setSysTime() {
-        let sysTime = Util.formatDate(new Date().getTime());
+        let sysTime = utils.formatDate(new Date().getTime());
         this.setState({
             sysTime
         });
