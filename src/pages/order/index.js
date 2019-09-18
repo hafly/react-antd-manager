@@ -112,7 +112,7 @@ export default class Order extends React.Component {
             });
             return
         }
-        window.open(`/#/common/order/detail/${item.id}`);
+        window.open(`/common/order/detail/${item.id}`);
     }
 
     render() {
