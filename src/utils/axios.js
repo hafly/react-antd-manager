@@ -19,6 +19,7 @@ export default class Axios {
         });
     }
 
+    // 封装ajax请求，后端返回格式要固定
     static ajax(options) {
         let baseURL = ' http://127.0.0.1:7300/mock/5d761d1bf44f481c68a6282d/manager';
         return new Promise((resolve, reject) => {
