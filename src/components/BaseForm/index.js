@@ -9,6 +9,7 @@ const Option = Select.Option;
 const {RangePicker} = DatePicker;
 
 class BaseForm extends React.PureComponent {
+    // 构建表单
     initFormList() {
         const {getFieldDecorator} = this.props.form;
         const formList = this.props.formList;
@@ -68,17 +69,20 @@ class BaseForm extends React.PureComponent {
         return formItemList;
     }
 
+    // 构建下拉选项
     getOptionList(data) {
         return data.map((item) => {
             return <Option value={item.id} key={item.id}>{item.name}</Option>
         });
     }
 
+    // 提交
     handleFormSubmit = () => {
         let fieldsValue = this.props.form.getFieldsValue();
         this.props.formSubmit(fieldsValue);
     }
 
+    // 重置
     reset = () => {
         this.props.form.resetFields();
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, Table, Spin, Modal, Button, message} from 'antd';
+import BaseTable from '../../components/BaseTable';
 import axios from '../../utils/axios';
 import utils from "../../utils/utils";
 
@@ -98,6 +99,13 @@ export default class BasicTable extends React.Component {
         })
     }
 
+    onCheckboxChange = (selectedRowKeys, selectedRows) => {
+        this.setState({
+            selectedRowKeys2: selectedRowKeys,
+            selectedRows: selectedRows
+        })
+    }
+
     // 多选执行删除
     handleDelete = () => {
         let rows = this.state.selectedRows;
@@ -176,27 +184,6 @@ export default class BasicTable extends React.Component {
             }
         ];
 
-        // 单选
-        const radioRowSelection = {
-            type: 'radio',
-            selectedRowKeys: this.state.selectedRowKeys,
-            onSelect: (record) => {
-                this.onRadioSelect(record)
-            }
-        }
-
-        // 多选
-        const checkboxRowSelection = {
-            type: 'checkbox',
-            selectedRowKeys: this.state.selectedRowKeys2,
-            onChange: (selectedRowKeys2, selectedRows) => {
-                this.setState({
-                    selectedRowKeys2,
-                    selectedRows
-                })
-            }
-        }
-
         return (
             <div>
                 <Card title="基础表格">
@@ -218,10 +205,12 @@ export default class BasicTable extends React.Component {
                 </Card>
                 <Card title="单选" style={{marginTop: 10}}>
                     <Spin spinning={this.state.loading}>
-                        <Table
-                            rowSelection={radioRowSelection}
+                        <BaseTable
+                            type="radio"
                             columns={columns}
                             dataSource={this.state.dataSource2}
+                            selectedRowKeys={this.state.selectedRowKeys}
+                            onSelect={this.onRadioSelect}
                             pagination={false}
                         />
                     </Spin>
@@ -231,17 +220,19 @@ export default class BasicTable extends React.Component {
                         <div>
                             <Button onClick={this.handleDelete}>删除</Button>
                         </div>
-                        <Table
-                            rowSelection={checkboxRowSelection}
+                        <BaseTable
+                            type="checkbox"
                             columns={columns}
                             dataSource={this.state.dataSource2}
+                            selectedRowKeys={this.state.selectedRowKeys2}
+                            onChange={this.onCheckboxChange}
                             pagination={false}
                         />
                     </Spin>
                 </Card>
                 <Card title="表格分页" style={{marginTop: 10}}>
                     <Spin spinning={this.state.loading}>
-                        <Table
+                        <BaseTable
                             columns={columns}
                             dataSource={this.state.dataSource2}
                             pagination={this.state.pagination}
