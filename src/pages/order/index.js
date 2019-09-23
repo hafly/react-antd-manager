@@ -1,14 +1,13 @@
 import React from 'react';
-import {Card, Form, Select, Button, Table, DatePicker, Spin, Modal, message} from 'antd';
+import {Card, Form, Button, Table, Spin, Modal, message} from 'antd';
+import BaseForm from '../../components/BaseForm';
+import moment from 'moment';
 import axios from '../../utils/axios';
 import utils from '../../utils/utils';
-import locale from 'antd/es/date-picker/locale/zh_CN';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
-const {RangePicker} = DatePicker;
 
-export default class Order extends React.Component {
+export default class Order extends React.PureComponent {
 
     state = {
         loading: true,
@@ -22,6 +21,36 @@ export default class Order extends React.Component {
         page: 1
     }
 
+    formList = [{
+        type: 'select',
+        label: '城市',
+        field: 'city',
+        width: 100,
+        placeholder: '全部',
+        initialValue: '0',
+        list: [
+            {id: '0', name: '全部'},
+            {id: '1', name: '北京市'},
+            {id: '2', name: '天津市'},
+            {id: '3', name: '重庆市'}
+        ]
+    }, {
+        type: 'doubleDay',
+        label: '订单时间',
+        field: 'order_time',
+        initialValue: [moment('2019-09-01', 'YYYY-MM-DD'), moment('2019-09-30', 'YYYY-MM-DD')]
+    }, {
+        type: 'select',
+        label: '订单状态',
+        field: 'order_status',
+        width: 100,
+        initialValue: '1',
+        list: [
+            {id: '0', name: '全部'},
+            {id: '1', name: '进行中'},
+            {id: '2', name: '结束行程'}]
+    }]
+
     componentDidMount() {
         this.request();
     }
@@ -34,7 +63,7 @@ export default class Order extends React.Component {
         axios.ajax({
             url: '/order/list',
             data: {
-                page: this.params.page
+                page: this.params
             }
         }).then((res) => {
             let data = res.data;
@@ -88,7 +117,7 @@ export default class Order extends React.Component {
             this.setState({
                 orderConfirmVisible: false,
                 selectedItem: {},
-                selectedRowKeys:[]
+                selectedRowKeys: []
             });
             this.request();
         });
@@ -113,6 +142,12 @@ export default class Order extends React.Component {
             return
         }
         window.open(`/common/order/detail/${item.id}`);
+    }
+
+    handleFormSubmit = (params) => {
+        this.params = params;
+        this.params.page = 1;
+        this.request();
     }
 
     render() {
@@ -179,7 +214,7 @@ export default class Order extends React.Component {
         return (
             <Spin spinning={this.state.loading}>
                 <Card>
-                    <FilterForm/>
+                    <BaseForm formList={this.formList} formSubmit={this.handleFormSubmit}></BaseForm>
                 </Card>
                 <Card style={{marginTop: 10, borderBottom: 0}}>
                     <Button onClick={this.openOrderDetail}>订单详情</Button>
@@ -230,64 +265,3 @@ export default class Order extends React.Component {
         )
     }
 }
-
-// 查询表单
-class FilterForm extends React.Component {
-    render() {
-        const {getFieldDecorator} = this.props.form;
-        return (
-            <Form layout="inline">
-                <FormItem label="城市">
-                    {
-                        getFieldDecorator('city_id', {
-                            initialValue: ''
-                        })(
-                            <Select placeholder="全部" style={{width: 100}}>
-                                <Option value="">全部</Option>
-                                <Option value="1">北京市</Option>
-                                <Option value="2">天津市</Option>
-                                <Option value="3">重庆市</Option>
-                            </Select>
-                        )
-                    }
-                </FormItem>
-                <FormItem label="订单时间">
-                    <RangePicker
-                        locale={locale}
-                        dateRender={current => {
-                            const style = {};
-                            if (current.date() === 1) {
-                                style.border = '1px solid #1890ff';
-                                style.borderRadius = '50%';
-                            }
-                            return (
-                                <div className="ant-calendar-date" style={style}>
-                                    {current.date()}
-                                </div>
-                            );
-                        }}
-                    />
-                </FormItem>
-                <FormItem label="订单状态">
-                    {
-                        getFieldDecorator('auth_status', {
-                            initialValue: ''
-                        })(
-                            <Select placeholder="全部" style={{width: 100}}>
-                                <Option value="">全部</Option>
-                                <Option value="1">进行中</Option>
-                                <Option value="2">结束行程</Option>
-                            </Select>
-                        )
-                    }
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" style={{margin: '0 20px'}}>查询</Button>
-                    <Button>重置</Button>
-                </FormItem>
-            </Form>
-        )
-    }
-}
-
-FilterForm = Form.create()(FilterForm);

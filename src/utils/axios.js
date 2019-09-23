@@ -29,23 +29,31 @@ export default class Axios {
                 method: options.method || 'get',
                 timeout: 5000,
                 params: options.data || {},
-            }).then((response) => {
-                if (response.status === 200) {
-                    let res = response.data
-                    if (res.status === 1) {
-                        resolve(res);
+            })
+                .then((response) => {
+                    if (response.status === 200) {
+                        let res = response.data
+                        if (res.status === 1) {
+                            resolve(res);
+                        }
+                        else {
+                            Modal.error({
+                                title: '提示',
+                                content: res.message
+                            })
+                        }
                     }
                     else {
-                        Modal.error({
-                            title: '提示',
-                            content: res.message
-                        })
+                        reject(response);
                     }
-                }
-                else {
-                    reject(response);
-                }
-            })
+                })
+                .catch(function (error) {
+                    Modal.error({
+                        title: '提示',
+                        content: '请求失败'
+                    })
+                    console.error(error);
+                })
         });
     }
 }
