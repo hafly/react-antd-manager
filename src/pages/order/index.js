@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Form, Button, Table, Spin, Modal, message} from 'antd';
+import {Card, Form, Table, Button, Spin, Modal, message} from 'antd';
 import BaseForm from '../../components/BaseForm';
 import moment from 'moment';
 import axios from '../../utils/axios';
@@ -13,7 +13,7 @@ export default class Order extends React.PureComponent {
         loading: true,
         orderConfirmVisible: false,
         selectedRowKeys: [],    // 单选选中key
-        selectedItem: {},       // 单选选中对象
+        selectedRows: {},       // 单选选中对象
         orderInfo: {}           // 选中订单信息
     }
 
@@ -86,7 +86,7 @@ export default class Order extends React.PureComponent {
 
     // 结束订单
     handleFinish = () => {
-        let id = this.state.selectedItem.id;
+        let id = this.state.selectedRows.id;
         if (!id) {
             Modal.warn({
                 title: '信息',
@@ -119,7 +119,7 @@ export default class Order extends React.PureComponent {
             message.success('订单结束成功');
             this.setState({
                 orderConfirmVisible: false,
-                selectedItem: {},
+                selectedRows: {},
                 selectedRowKeys: []
             });
             this.request();
@@ -130,12 +130,12 @@ export default class Order extends React.PureComponent {
     onRowSelect = (record) => {
         this.setState({
             selectedRowKeys: [record.key],
-            selectedItem: record
+            selectedRows: record
         })
     }
 
     openOrderDetail = () => {
-        let item = this.state.selectedItem;
+        let item = this.state.selectedRows;
         if (!item.id) {
             Modal.warn({
                 title: '信息',
@@ -204,14 +204,6 @@ export default class Order extends React.PureComponent {
             }
         ];
 
-        const rowSelection = {
-            type: 'radio',
-            selectedRowKeys: this.state.selectedRowKeys,
-            onSelect: (record) => {
-                this.onRowSelect(record)
-            }
-        }
-
         const formItemLayout = {
             labelCol: {span: 5},
             wrapperCol: {span: 19}
@@ -231,9 +223,16 @@ export default class Order extends React.PureComponent {
                         bordered
                         columns={columns}
                         dataSource={this.state.dataSource}
+                        rowSelection={{
+                            type: 'radio',
+                            selectedRowKeys: this.state.selectedRowKeys,
+                            onSelect: (row) => {
+                                this.onRowSelect(row)
+                            }
+                        }}
                         pagination={this.state.pagination}
-                        rowSelection={rowSelection}
                     />
+
                 </Card>
                 <Modal
                     title="结束订单"
