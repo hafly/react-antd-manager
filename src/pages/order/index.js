@@ -18,7 +18,10 @@ export default class Order extends React.PureComponent {
     }
 
     params = {
-        page: 1
+        page: 1,
+        city: '',
+        order_time: '',
+        order_status: ''
     }
 
     formList = [{
@@ -124,10 +127,9 @@ export default class Order extends React.PureComponent {
     }
 
     // 结束订单-单选选中
-    onRowClick = (record, index) => {
-        let selectKey = [index];
+    onRowSelect = (record) => {
         this.setState({
-            selectedRowKeys: selectKey,
+            selectedRowKeys: [record.key],
             selectedItem: record
         })
     }
@@ -144,6 +146,7 @@ export default class Order extends React.PureComponent {
         window.open(`/common/order/detail/${item.id}`);
     }
 
+    // 表单提交
     handleFormSubmit = (params) => {
         this.params = params;
         this.params.page = 1;
@@ -203,7 +206,10 @@ export default class Order extends React.PureComponent {
 
         const rowSelection = {
             type: 'radio',
-            selectedRowKeys: this.state.selectedRowKeys
+            selectedRowKeys: this.state.selectedRowKeys,
+            onSelect: (record) => {
+                this.onRowSelect(record)
+            }
         }
 
         const formItemLayout = {
@@ -227,13 +233,6 @@ export default class Order extends React.PureComponent {
                         dataSource={this.state.dataSource}
                         pagination={this.state.pagination}
                         rowSelection={rowSelection}
-                        onRow={(record, index) => {
-                            return {
-                                onClick: () => {
-                                    this.onRowClick(record, index)
-                                }
-                            }
-                        }}
                     />
                 </Card>
                 <Modal

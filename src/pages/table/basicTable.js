@@ -86,12 +86,12 @@ export default class BasicTable extends React.Component {
         });
     }
 
-    onRowClick = (record, index) => {
+    onRadioSelect = (record) => {
         Modal.info({
             title: '信息',
             content: `用户名：${record.userName}`
         })
-        let selectKey = [index];
+        let selectKey = [record.key];
         this.setState({
             selectedRowKeys: selectKey,
             selectedItem: record
@@ -176,12 +176,17 @@ export default class BasicTable extends React.Component {
             }
         ];
 
-        const rowSelection = {
+        // 单选
+        const radioRowSelection = {
             type: 'radio',
-            selectedRowKeys: this.state.selectedRowKeys
+            selectedRowKeys: this.state.selectedRowKeys,
+            onSelect: (record) => {
+                this.onRadioSelect(record)
+            }
         }
 
-        const rowCheckSelection = {
+        // 多选
+        const checkboxRowSelection = {
             type: 'checkbox',
             selectedRowKeys: this.state.selectedRowKeys2,
             onChange: (selectedRowKeys2, selectedRows) => {
@@ -192,7 +197,6 @@ export default class BasicTable extends React.Component {
             }
         }
 
-        let self = this;
         return (
             <div>
                 <Card title="基础表格">
@@ -215,14 +219,7 @@ export default class BasicTable extends React.Component {
                 <Card title="单选" style={{marginTop: 10}}>
                     <Spin spinning={this.state.loading}>
                         <Table
-                            rowSelection={rowSelection}
-                            onRow={(record, index) => {
-                                return {
-                                    onClick() {
-                                        self.onRowClick(record, index)
-                                    }
-                                }
-                            }}
+                            rowSelection={radioRowSelection}
                             columns={columns}
                             dataSource={this.state.dataSource2}
                             pagination={false}
@@ -235,7 +232,7 @@ export default class BasicTable extends React.Component {
                             <Button onClick={this.handleDelete}>删除</Button>
                         </div>
                         <Table
-                            rowSelection={rowCheckSelection}
+                            rowSelection={checkboxRowSelection}
                             columns={columns}
                             dataSource={this.state.dataSource2}
                             pagination={false}

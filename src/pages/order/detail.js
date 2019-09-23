@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card} from 'antd';
+import BMap from 'BMap';
 import axios from '../../utils/axios';
 import './detail.less';
 
@@ -30,7 +31,7 @@ export default class Detail extends React.Component {
     }
 
     renderMap(data) {
-        this.map = new window.BMap.Map("orderDetailMap", {});
+        this.map = new BMap.Map("orderDetailMap", {});
         this.map.enableScrollWheelZoom(true);
         this.drawBikeRoute(data.position_list);
         this.drwaServiceArea(data.area);
@@ -39,21 +40,20 @@ export default class Detail extends React.Component {
 
     addMapControl() {
         let map = this.map;
-        map.addControl(new window.BMap.NavigationControl());
-        map.addControl(new window.BMap.ScaleControl());
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
     }
 
     // 行驶轨迹
     drawBikeRoute(positionList) {
         let map = this.map;
-        let BMap = window.BMap;
 
         if (positionList.length > 0) {
             let first = positionList[0];
             let last = positionList[positionList.length - 1];
 
-            let startPoint = new window.BMap.Point(first.lon, first.lat);
-            let endPoint = new window.BMap.Point(last.lon, last.lat);
+            let startPoint = new BMap.Point(first.lon, first.lat);
+            let endPoint = new BMap.Point(last.lon, last.lat);
 
             let startIcon = new BMap.Icon('/assets/start_point.png', new BMap.Size(36, 42), {
                 imageSize: new BMap.Size(36, 42),
@@ -92,7 +92,6 @@ export default class Detail extends React.Component {
     // 绘制服务区
     drwaServiceArea(positionList){
         let map = this.map;
-        let BMap = window.BMap;
 
         let trackPoint = [];
         for (let i = 0; i < positionList.length; i++) {
