@@ -24,7 +24,7 @@ export default class Order extends React.Component {
 
     formList = [
         {
-            type: 'select',
+            type: 'Select',
             label: '城市',
             field: 'city',
             width: 100,
@@ -38,13 +38,13 @@ export default class Order extends React.Component {
             ]
         },
         {
-            type: 'doubleDay',
+            type: 'RangePicker',
             label: '订单时间',
             field: 'order_time',
             initialValue: [moment('2019-09-01', 'YYYY-MM-DD'), moment('2019-09-30', 'YYYY-MM-DD')]
         },
         {
-            type: 'select',
+            type: 'Select',
             label: '订单状态',
             field: 'order_status',
             width: 100,
@@ -201,7 +201,6 @@ export default class Order extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         const formItemLayout = {
             labelCol: {span: 5},
             wrapperCol: {span: 19}

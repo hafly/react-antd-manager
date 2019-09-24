@@ -1,5 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {ConfigProvider} from 'antd';
+import 'moment/locale/zh-cn';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import App from './App';
 import Login from './pages/login';
 import Admin from './admin';
@@ -20,45 +23,49 @@ import HighTable from './pages/table/highTable';
 import City from './pages/city';
 import Order from './pages/order';
 import OrderDetail from './pages/order/detail';
+import User from './pages/user';
 import NoMatch from './pages/nomatch';
 
 export default class IRouter extends React.Component {
     render() {
         return (
-            <BrowserRouter>
-                <App>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/admin" render={() =>
-                        <Admin>
-                            <Switch>
-                                <Route path="/admin/home" component={Home}/>
-                                <Route path="/admin/ui/buttons" component={Buttons}/>
-                                <Route path="/admin/ui/modals" component={Modals}/>
-                                <Route path="/admin/ui/loadings" component={Loadings}/>
-                                <Route path="/admin/ui/notification" component={Notice}/>
-                                <Route path="/admin/ui/messages" component={Messages}/>
-                                <Route path="/admin/ui/tabs" component={Tabs}/>
-                                <Route path="/admin/ui/gallery" component={Gallery}/>
-                                <Route path="/admin/ui/carousel" component={Carousel}/>
-                                <Route path="/admin/form/login" component={FormLogin}/>
-                                <Route path="/admin/form/register" component={FormRegister}/>
-                                <Route path="/admin/table/basic" component={BasicTable}/>
-                                <Route path="/admin/table/high" component={HighTable}/>
-                                <Route path="/admin/city" component={City}/>
-                                <Route path="/admin/order" component={Order}/>
-                                <Route component={NoMatch}/>
-                            </Switch>
-                        </Admin>
-                    }/>
-                    <Route path="/common" render={() =>
-                        <Common>
-                            <Switch>
-                                <Route path="/common/order/detail/:orderId" component={OrderDetail}/>
-                            </Switch>
-                        </Common>
-                    }/>
-                </App>
-            </BrowserRouter>
+            <ConfigProvider locale={zh_CN}>
+                <BrowserRouter>
+                    <App>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/admin" render={() =>
+                            <Admin>
+                                <Switch>
+                                    <Route path="/admin/home" component={Home}/>
+                                    <Route path="/admin/ui/buttons" component={Buttons}/>
+                                    <Route path="/admin/ui/modals" component={Modals}/>
+                                    <Route path="/admin/ui/loadings" component={Loadings}/>
+                                    <Route path="/admin/ui/notification" component={Notice}/>
+                                    <Route path="/admin/ui/messages" component={Messages}/>
+                                    <Route path="/admin/ui/tabs" component={Tabs}/>
+                                    <Route path="/admin/ui/gallery" component={Gallery}/>
+                                    <Route path="/admin/ui/carousel" component={Carousel}/>
+                                    <Route path="/admin/form/login" component={FormLogin}/>
+                                    <Route path="/admin/form/register" component={FormRegister}/>
+                                    <Route path="/admin/table/basic" component={BasicTable}/>
+                                    <Route path="/admin/table/high" component={HighTable}/>
+                                    <Route path="/admin/city" component={City}/>
+                                    <Route path="/admin/order" component={Order}/>
+                                    <Route path="/admin/user" component={User}/>
+                                    <Route component={NoMatch}/>
+                                </Switch>
+                            </Admin>
+                        }/>
+                        <Route path="/common" render={() =>
+                            <Common>
+                                <Switch>
+                                    <Route path="/common/order/detail/:orderId" component={OrderDetail}/>
+                                </Switch>
+                            </Common>
+                        }/>
+                    </App>
+                </BrowserRouter>
+            </ConfigProvider>
         );
     }
 }
