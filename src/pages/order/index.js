@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Form, Table, Button, Spin, Modal, message} from 'antd';
+import {Card, Form, Table, Button, Modal, message} from 'antd';
 import BaseForm from '../../components/BaseForm';
 import moment from 'moment';
 import axios from '../../utils/axios';
@@ -7,10 +7,8 @@ import utils from '../../utils/utils';
 
 const FormItem = Form.Item;
 
-export default class Order extends React.PureComponent {
-
+export default class Order extends React.Component {
     state = {
-        loading: true,
         orderConfirmVisible: false,
         selectedRowKeys: [],    // 单选选中key
         selectedRows: {},       // 单选选中对象
@@ -24,35 +22,88 @@ export default class Order extends React.PureComponent {
         order_status: ''
     }
 
-    formList = [{
-        type: 'select',
-        label: '城市',
-        field: 'city',
-        width: 100,
-        placeholder: '全部',
-        initialValue: '0',
-        list: [
-            {id: '0', name: '全部'},
-            {id: '1', name: '北京市'},
-            {id: '2', name: '天津市'},
-            {id: '3', name: '重庆市'}
-        ]
-    }, {
-        type: 'doubleDay',
-        label: '订单时间',
-        field: 'order_time',
-        initialValue: [moment('2019-09-01', 'YYYY-MM-DD'), moment('2019-09-30', 'YYYY-MM-DD')]
-    }, {
-        type: 'select',
-        label: '订单状态',
-        field: 'order_status',
-        width: 100,
-        initialValue: '1',
-        list: [
-            {id: '0', name: '全部'},
-            {id: '1', name: '进行中'},
-            {id: '2', name: '结束行程'}]
-    }]
+    formList = [
+        {
+            type: 'select',
+            label: '城市',
+            field: 'city',
+            width: 100,
+            placeholder: '全部',
+            initialValue: '0',
+            list: [
+                {id: '0', name: '全部'},
+                {id: '1', name: '北京市'},
+                {id: '2', name: '天津市'},
+                {id: '3', name: '重庆市'}
+            ]
+        },
+        {
+            type: 'doubleDay',
+            label: '订单时间',
+            field: 'order_time',
+            initialValue: [moment('2019-09-01', 'YYYY-MM-DD'), moment('2019-09-30', 'YYYY-MM-DD')]
+        },
+        {
+            type: 'select',
+            label: '订单状态',
+            field: 'order_status',
+            width: 100,
+            initialValue: '1',
+            list: [
+                {id: '0', name: '全部'},
+                {id: '1', name: '进行中'},
+                {id: '2', name: '结束行程'}]
+        }]
+
+    columns = [
+        {
+            title: '订单编号',
+            dataIndex: 'order_sn'
+        },
+        {
+            title: '车辆编号',
+            dataIndex: 'bike_sn'
+        },
+        {
+            title: '用户名',
+            dataIndex: 'user_name'
+        },
+        {
+            title: '手机号码',
+            dataIndex: 'mobile'
+        },
+        {
+            title: '里程',
+            dataIndex: 'distance',
+            render(distance) {
+                return distance / 1000 + 'Km';
+            }
+        },
+        {
+            title: '行驶时长',
+            dataIndex: 'total_time'
+        },
+        {
+            title: '状态',
+            dataIndex: 'status'
+        },
+        {
+            title: '开始时间',
+            dataIndex: 'start_time'
+        },
+        {
+            title: '结束时间',
+            dataIndex: 'end_time'
+        },
+        {
+            title: '订单金额',
+            dataIndex: 'total_fee'
+        },
+        {
+            title: '实付金额',
+            dataIndex: 'user_pay'
+        }
+    ];
 
     componentDidMount() {
         this.request();
@@ -60,9 +111,6 @@ export default class Order extends React.PureComponent {
 
     request() {
         let self = this;
-        this.setState({
-            loading: true
-        });
         axios.ajax({
             url: '/order/list',
             data: {
@@ -74,13 +122,12 @@ export default class Order extends React.PureComponent {
                 return item.key = index;
             });
             this.setState({
-                loading: false,
                 dataSource: data.rows,
                 pagination: utils.pagination(data, (current) => {
                     self.params.page = current;
                     self.request();
                 })
-            })
+            });
         });
     }
 
@@ -154,63 +201,14 @@ export default class Order extends React.PureComponent {
     }
 
     render() {
-        const columns = [
-            {
-                title: '订单编号',
-                dataIndex: 'order_sn'
-            },
-            {
-                title: '车辆编号',
-                dataIndex: 'bike_sn'
-            },
-            {
-                title: '用户名',
-                dataIndex: 'user_name'
-            },
-            {
-                title: '手机号码',
-                dataIndex: 'mobile'
-            },
-            {
-                title: '里程',
-                dataIndex: 'distance',
-                render(distance) {
-                    return distance / 1000 + 'Km';
-                }
-            },
-            {
-                title: '行驶时长',
-                dataIndex: 'total_time'
-            },
-            {
-                title: '状态',
-                dataIndex: 'status'
-            },
-            {
-                title: '开始时间',
-                dataIndex: 'start_time'
-            },
-            {
-                title: '结束时间',
-                dataIndex: 'end_time'
-            },
-            {
-                title: '订单金额',
-                dataIndex: 'total_fee'
-            },
-            {
-                title: '实付金额',
-                dataIndex: 'user_pay'
-            }
-        ];
-
+        console.log(this.props)
         const formItemLayout = {
             labelCol: {span: 5},
             wrapperCol: {span: 19}
         }
 
         return (
-            <Spin spinning={this.state.loading}>
+            <div>
                 <Card>
                     <BaseForm formList={this.formList} formSubmit={this.handleFormSubmit}></BaseForm>
                 </Card>
@@ -221,7 +219,7 @@ export default class Order extends React.PureComponent {
                 <Card>
                     <Table
                         bordered
-                        columns={columns}
+                        columns={this.columns}
                         dataSource={this.state.dataSource}
                         rowSelection={{
                             type: 'radio',
@@ -232,7 +230,6 @@ export default class Order extends React.PureComponent {
                         }}
                         pagination={this.state.pagination}
                     />
-
                 </Card>
                 <Modal
                     title="结束订单"
@@ -259,7 +256,8 @@ export default class Order extends React.PureComponent {
                         </FormItem>
                     </Form>
                 </Modal>
-            </Spin>
+            </div>
         )
     }
 }
+

@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const {RangePicker} = DatePicker;
 
-class BaseForm extends React.PureComponent {
+class BaseForm extends React.Component {
     // 构建表单
     initFormList() {
         const {getFieldDecorator} = this.props.form;

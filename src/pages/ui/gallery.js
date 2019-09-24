@@ -24,7 +24,7 @@ export default class PageGallery extends React.Component {
         const imgList = imgs.map((list) => list.map((item, index) => {
             return (
                 <div style={{marginBottom: 10}} key={index}>
-                    <Card cover={<img src={'./gallery/' + item} alt="" onClick={() => this.openGallery(item)}/>}>
+                    <Card cover={<img src={'/gallery/' + item} alt="" onClick={() => this.openGallery(item)}/>}>
                         <Card.Meta title="React Admin" description="卡片详情"/>
                     </Card>
                 </div>
@@ -42,7 +42,7 @@ export default class PageGallery extends React.Component {
                        title="图片画廊"
                        footer={null}
                        onCancel={() => this.setState({visible: false})}>
-                    <img src={'./gallery/' + this.state.currentImg} alt="" style={{width: '100%'}}/>
+                    <img src={'/gallery/' + this.state.currentImg} alt="" style={{width: '100%'}}/>
                 </Modal>
             </div>
         )
