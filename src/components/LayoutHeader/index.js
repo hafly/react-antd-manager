@@ -8,7 +8,7 @@ const Header = Layout.Header;
 export default class LayoutHeader extends React.Component {
     state = {};
 
-    componentWillMount() {
+    componentDidMount() {
         let self = this;
 
         this.setState({

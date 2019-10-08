@@ -19,6 +19,7 @@ class BaseForm extends React.Component {
                 let initialValue = item.initialValue || '';
                 let width = item.width;
 
+                // 输入框
                 if (item.type === 'Input') {
                     const formItem =
                         <FormItem label={label} key={field}>
@@ -32,6 +33,7 @@ class BaseForm extends React.Component {
                         </FormItem>
                     formItemList.push(formItem);
                 }
+                // 下拉选项
                 else if (item.type === 'Select') {
                     const formItem =
                         <FormItem label={label} key={field}>
@@ -47,11 +49,12 @@ class BaseForm extends React.Component {
                         </FormItem>
                     formItemList.push(formItem);
                 }
+                // 日期选择
                 else if (item.type === 'DatePicker') {
                     const formItem =
                         <FormItem label={label} key={field}>
                             {
-                                getFieldDecorator('defualtTime', {
+                                getFieldDecorator(field, {
                                     initialValue: initialValue || null
                                 })(
                                     <DatePicker placeholder={item.placeholder}/>
@@ -60,11 +63,12 @@ class BaseForm extends React.Component {
                         </FormItem>
                     formItemList.push(formItem);
                 }
+                // 日期段选择
                 else if (item.type === 'RangePicker') {
                     const formItem =
                         <FormItem label={label} key={field}>
                             {
-                                getFieldDecorator('defualtTime', {
+                                getFieldDecorator(field, {
                                     initialValue: initialValue || null
                                 })(
                                     <RangePicker/>

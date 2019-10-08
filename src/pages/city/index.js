@@ -177,13 +177,13 @@ class FilterForm extends React.Component {
                 </FormItem>
                 <FormItem label="用车模式">
                     {
-                        getFieldDecorator('mode', {
-                            initialValue: ''
+                        getFieldDecorator('defaultTime', {
+                            initialValue: '0'
                         })(
-                            <Select placeholder="全部" style={{width: 124}}>
-                                <Option value="">全部</Option>
-                                <Option value="1">指定停车点模式</Option>
-                                <Option value="2">禁停区模式</Option>
+                            <Select placeholder="请选择时间" style={{width: 124}}>
+                                <Option value="0">无默认时间</Option>
+                                <Option value="1">当前天前30天</Option>
+                                <Option value="2">当天13日前-当天2日前</Option>
                             </Select>
                         )
                     }

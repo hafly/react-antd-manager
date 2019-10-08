@@ -9,9 +9,7 @@ export default class BasicTable extends React.Component {
         loading: true,
         dataSource: [],
         dataSource2: [],
-        selectedRowKeys: [],    // 单选选中key
         selectedItem: {},       // 单选选中对象
-        selectedRowKeys2: [],   // 多选选中keys
         selectedRows: [],       // 多选选中对象数组
     }
 
@@ -20,6 +18,16 @@ export default class BasicTable extends React.Component {
     }
 
     componentDidMount() {
+        this.request();
+    }
+
+    request() {
+        let self = this;
+        this.setState({
+            loading: true
+        });
+
+        // mock数据
         const dataSource = [
             {
                 key: '0',
@@ -58,14 +66,8 @@ export default class BasicTable extends React.Component {
         this.setState({
             dataSource
         });
-        this.request();
-    }
 
-    request() {
-        let self = this;
-        this.setState({
-            loading: true
-        });
+        // 请求数据
         axios.ajax({
             url: '/table/list',
             data: {
@@ -87,21 +89,18 @@ export default class BasicTable extends React.Component {
         });
     }
 
-    onRadioSelect = (record) => {
+    onRadioSelect = (selectedRows) => {
         Modal.info({
             title: '信息',
-            content: `用户名：${record.userName}`
-        })
-        let selectKey = [record.key];
+            content: `用户名：${selectedRows.userName}`
+        });
         this.setState({
-            selectedRowKeys: selectKey,
-            selectedItem: record
+            selectedItem: selectedRows
         })
     }
 
-    onCheckboxChange = (selectedRowKeys, selectedRows) => {
+    onCheckboxChange = (selectedRows) => {
         this.setState({
-            selectedRowKeys2: selectedRowKeys,
             selectedRows: selectedRows
         })
     }
@@ -209,7 +208,6 @@ export default class BasicTable extends React.Component {
                             type="radio"
                             columns={columns}
                             dataSource={this.state.dataSource2}
-                            selectedRowKeys={this.state.selectedRowKeys}
                             onSelect={this.onRadioSelect}
                             pagination={false}
                         />
@@ -224,7 +222,6 @@ export default class BasicTable extends React.Component {
                             type="checkbox"
                             columns={columns}
                             dataSource={this.state.dataSource2}
-                            selectedRowKeys={this.state.selectedRowKeys2}
                             onChange={this.onCheckboxChange}
                             pagination={false}
                         />

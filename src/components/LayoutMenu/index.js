@@ -11,7 +11,7 @@ export default class LayoutMenu extends React.Component {
         menuTreeNode: []
     };
 
-    componentWillMount() {
+    componentDidMount() {
         const menuTreeNode = this.renderMenu(MenuConfig);
         this.setState({
             menuTreeNode

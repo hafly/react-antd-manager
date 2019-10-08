@@ -7,7 +7,7 @@ const {TabPane} = Tabs;
 export default class pageTabs extends React.Component {
     newTabIndex = 0;
 
-    componentWillMount() {
+    componentDidMount() {
         const panes = [{
             title: 'Tab 1',
             content: '欢迎学习React课程1',
