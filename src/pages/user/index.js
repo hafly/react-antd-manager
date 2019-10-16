@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, Form, Button, Input, Radio, Select, DatePicker, Spin, Modal, message} from 'antd';
 import BaseForm from '../../components/BaseForm';
 import BaseTable from '../../components/BaseTable';
+import moment from 'moment';
 import axios from '../../utils/axios';
 import utils from '../../utils/utils';
 import dictionary from '../../config/dictionary';
@@ -15,7 +16,8 @@ export default class User extends React.Component {
     state = {
         loading: true,
         dataSource: [],
-        isVisibleModal: false
+        isVisibleModal: false,
+        userInfo: {}
     }
 
     params = {
@@ -99,6 +101,8 @@ export default class User extends React.Component {
         }
     ]
 
+    selectedRow = undefined;
+
     componentDidMount() {
         this.requestList();
     }
@@ -146,6 +150,64 @@ export default class User extends React.Component {
                 title: '添加员工'
             })
         }
+        else if (type === 'edit') {
+            let userInfo = this.selectedRow;
+            if (!userInfo) {
+                Modal.warn({
+                    title: '信息',
+                    content: '请选择一个员工进行操作'
+                });
+                return
+            }
+            this.setState({
+                type,
+                isVisibleModal: true,
+                title: '编辑员工',
+                userInfo
+            })
+        }
+        else if (type === 'detail') {
+            let userInfo = this.selectedRow;
+            if (!userInfo) {
+                Modal.warn({
+                    title: '信息',
+                    content: '请选择一个员工进行操作'
+                });
+                return
+            }
+            this.setState({
+                type,
+                isVisibleModal: true,
+                title: '员工详情',
+                userInfo
+            })
+        }
+        else if (type === 'delete') {
+            let userInfo = this.selectedRow;
+            if (!userInfo) {
+                Modal.warn({
+                    title: '信息',
+                    content: '请选择一个员工进行操作'
+                });
+                return
+            }
+            Modal.confirm({
+                title: '确认删除',
+                content: '是否要删除当前选中的员工',
+                onOk: () => {
+                    axios.ajax({
+                        url: '/user/delete',
+                        data: this.selectedRow
+                    }).then((res) => {
+                        message.success(res.message);
+                        this.setState({
+                            isVisibleModal: false
+                        });
+                        this.requestList();
+                    });
+                }
+            })
+        }
     }
 
     // 员工操作确认
@@ -160,18 +222,24 @@ export default class User extends React.Component {
                     this.setState({
                         isVisibleModal: false
                     });
-                    this.userForm.props.form.resetFields();
                     this.requestList();
                 });
             }
         });
     }
 
-    onRadioSelect = (selectedRows) => {
-        console.log(selectedRows)
+    onRadioSelect = (selectedRow) => {
+        this.selectedRow = selectedRow;
     }
 
     render() {
+        let footer = {};
+        if (this.state.type === 'detail') {
+            footer = {
+                footer: null
+            }
+        }
+
         return (
             <Spin spinning={this.state.loading}>
                 <Card>
@@ -203,8 +271,9 @@ export default class User extends React.Component {
                         })
                     }}
                     onOk={this.showModalOperateOk}
+                    {...footer}
                 >
-                    <UserForm wrappedComponentRef={(inst) => {
+                    <UserForm type={this.state.type} userInfo={this.state.userInfo} wrappedComponentRef={(inst) => {
                         this.userForm = inst
                     }}/>
                 </Modal>
@@ -214,7 +283,15 @@ export default class User extends React.Component {
 }
 
 class UserForm extends React.Component {
+    getState(state) {
+        return dictionary['state'][state];
+    }
+
     render() {
+        let userInfo = this.props.userInfo;
+        let type = this.props.type;
+        if (type === 'add') userInfo = {};
+
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
             labelCol: {span: 5},
@@ -224,55 +301,65 @@ class UserForm extends React.Component {
             <Form layout="horizontal">
                 <FormItem label="用户名" {...formItemLayout}>
                     {
-                        getFieldDecorator('user_name', {
-                            initialValue: '',
-                            rules: [
-                                {required: true, message: '用户名不能为空!'}
-                            ]
-                        })(
-                            <Input type="text" placeholder="请输入用户名" autoComplete="off"/>
-                        )
+                        type === 'detail' ? userInfo.userName :
+                            getFieldDecorator('userName', {
+                                initialValue: userInfo.userName,
+                                rules: [
+                                    {required: true, message: '用户名不能为空!'}
+                                ]
+                            })(
+                                <Input type="text" placeholder="请输入用户名" autoComplete="off"/>
+                            )
                     }
                 </FormItem>
                 <FormItem label="性别" {...formItemLayout}>
                     {
-                        getFieldDecorator('sex', {
-                            initialValue: 1
-                        })(
-                            <RadioGroup>
-                                <Radio value={1}>男</Radio>
-                                <Radio value={2}>女</Radio>
-                            </RadioGroup>
-                        )
+                        type === 'detail' ? (userInfo.sex === 1 ? '男' : '女') :
+                            getFieldDecorator('sex', {
+                                initialValue: userInfo.sex || 1
+                            })(
+                                <RadioGroup>
+                                    <Radio value={1}>男</Radio>
+                                    <Radio value={2}>女</Radio>
+                                </RadioGroup>
+                            )
                     }
                 </FormItem>
                 <FormItem label="状态" {...formItemLayout}>
                     {
-                        getFieldDecorator('state', {
-                            initialValue: 1
-                        })(
-                            <Select>
-                                <Option value={1}>咸鱼一条</Option>
-                                <Option value={2}>风华浪子</Option>
-                                <Option value={3}>北大才子</Option>
-                                <Option value={4}>百度FE</Option>
-                                <Option value={5}>创业者</Option>
-                            </Select>
-                        )
+                        type === 'detail' ? this.getState(userInfo.state) :
+                            getFieldDecorator('state', {
+                                initialValue: userInfo.state || 0
+                            })(
+                                <Select>
+                                    <Option value={0}>请选择状态</Option>
+                                    <Option value={1}>咸鱼一条</Option>
+                                    <Option value={2}>风华浪子</Option>
+                                    <Option value={3}>北大才子</Option>
+                                    <Option value={4}>百度FE</Option>
+                                    <Option value={5}>创业者</Option>
+                                </Select>
+                            )
                     }
                 </FormItem>
                 <FormItem label="生日" {...formItemLayout}>
                     {
-                        getFieldDecorator('birthday')(
-                            <DatePicker/>
-                        )
+                        type === 'detail' ? userInfo.birthday :
+                            getFieldDecorator('birthday', {
+                                initialValue: userInfo.birthday ? moment(userInfo.birthday) : null
+                            })(
+                                <DatePicker/>
+                            )
                     }
                 </FormItem>
                 <FormItem label="联系地址" {...formItemLayout}>
                     {
-                        getFieldDecorator('address')(
-                            <TextArea rows={3} placeholder="请输入联系地址"/>
-                        )
+                        type === 'detail' ? userInfo.address :
+                            getFieldDecorator('address', {
+                                initialValue: userInfo.address
+                            })(
+                                <TextArea rows={3} placeholder="请输入联系地址"/>
+                            )
                     }
                 </FormItem>
             </Form>
