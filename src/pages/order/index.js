@@ -52,7 +52,8 @@ export default class Order extends React.Component {
             list: [
                 {id: '0', name: '全部'},
                 {id: '1', name: '进行中'},
-                {id: '2', name: '结束行程'}]
+                {id: '2', name: '结束行程'}
+            ]
         }]
 
     columns = [
@@ -106,10 +107,11 @@ export default class Order extends React.Component {
     ];
 
     componentDidMount() {
-        this.request();
+        this.requestList();
     }
 
-    request() {
+    // 请求表格数据
+    requestList() {
         let self = this;
         axios.ajax({
             url: '/order/list',
@@ -125,14 +127,21 @@ export default class Order extends React.Component {
                 dataSource: data.rows,
                 pagination: utils.pagination(data, (current) => {
                     self.params.page = current;
-                    self.request();
+                    self.requestList();
                 })
             });
         });
     }
 
+    // 表单查询
+    handleFormSubmit = (params) => {
+        this.params = params;
+        this.params.page = 1;
+        this.requestList();
+    }
+
     // 结束订单
-    handleFinish = () => {
+    showModelFinishOrder = () => {
         let id = this.state.selectedRows.id;
         if (!id) {
             Modal.warn({
@@ -156,7 +165,7 @@ export default class Order extends React.Component {
     }
 
     // 结束订单-确认
-    handleFinishConfirm = () => {
+    showModelFinishOrderOk = () => {
         axios.ajax({
             url: '/order/finish_order',
             data: {
@@ -169,7 +178,7 @@ export default class Order extends React.Component {
                 selectedRows: {},
                 selectedRowKeys: []
             });
-            this.request();
+            this.requestList();
         });
     }
 
@@ -181,6 +190,7 @@ export default class Order extends React.Component {
         })
     }
 
+    // 跳转订单详情
     openOrderDetail = () => {
         let item = this.state.selectedRows;
         if (!item.id) {
@@ -191,13 +201,6 @@ export default class Order extends React.Component {
             return
         }
         window.open(`/common/order/detail/${item.id}`);
-    }
-
-    // 表单提交
-    handleFormSubmit = (params) => {
-        this.params = params;
-        this.params.page = 1;
-        this.request();
     }
 
     render() {
@@ -213,7 +216,7 @@ export default class Order extends React.Component {
                 </Card>
                 <Card style={{marginTop: 10, borderBottom: 0}}>
                     <Button onClick={this.openOrderDetail}>订单详情</Button>
-                    <Button style={{marginLeft: 10}} onClick={this.handleFinish}>结束订单</Button>
+                    <Button style={{marginLeft: 10}} onClick={this.showModelFinishOrder}>结束订单</Button>
                 </Card>
                 <Card>
                     <Table
@@ -238,7 +241,7 @@ export default class Order extends React.Component {
                             orderConfirmVisible: false
                         })
                     }}
-                    onOk={this.handleFinishConfirm}
+                    onOk={this.showModelFinishOrderOk}
                 >
                     <Form layout="horizontal">
                         <FormItem label="车辆信息" {...formItemLayout}>

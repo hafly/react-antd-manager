@@ -7,6 +7,9 @@ import './styles/admin.less';
 
 const {Content} = Layout;
 
+/**
+ * admin页面
+ */
 export default class Admin extends React.Component {
     render() {
         return (

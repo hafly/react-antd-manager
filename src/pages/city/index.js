@@ -7,7 +7,6 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 export default class City extends React.Component {
-
     state = {
         loading: true,
         dataSource: [],
@@ -110,7 +109,7 @@ export default class City extends React.Component {
             {
                 title: '操作时间',
                 dataIndex: 'update_time',
-                render(item){
+                render(item) {
                     return utils.formatDate(item);
                 }
             },
@@ -229,12 +228,8 @@ class OpenCityForm extends React.Component {
     render() {
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
-            labelCol: {
-                span: 5
-            },
-            wrapperCol: {
-                span: 19
-            }
+            labelCol: {span: 5},
+            wrapperCol: {span: 19}
         }
         return (
             <Form layout="horizontal">

@@ -3,6 +3,9 @@ import {Row} from 'antd';
 import LayoutHeader from './components/LayoutHeader';
 import './styles/common.less';
 
+/**
+ * common页面
+ */
 export default class Common extends React.Component {
     render() {
         return (

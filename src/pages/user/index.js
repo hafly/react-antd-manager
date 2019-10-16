@@ -1,20 +1,19 @@
 import React from 'react';
-import {Card, Form, Table, Button, Input, Spin, Modal, message} from 'antd';
+import {Card, Form, Button, Table, Input, Radio, Select, DatePicker, Spin, Modal, message} from 'antd';
 import BaseForm from '../../components/BaseForm';
-// import moment from 'moment';
+import BaseTable from '../../components/BaseTable';
 import axios from '../../utils/axios';
 import utils from '../../utils/utils';
 import dictionary from '../../config/dictionary';
 
-const FormItem = Form.FormItem;
+const FormItem = Form.Item;
+const Option = Select.Option;
 
-export default class User extends React.Component {
+export default class City extends React.Component {
     state = {
         loading: true,
         dataSource: [],
-        type: '',
-        title: '',
-        isModalVisible: false
+        isVisibleModal: false
     }
 
     params = {
@@ -27,26 +26,76 @@ export default class User extends React.Component {
             label: '用户名',
             field: 'user_name',
             width: 100,
-            placeholder: '请输入用户名',
+            placeholder: '请输入用户名称',
             initialValue: ''
         },
         {
             type: 'Input',
             label: '用户手机号',
             field: 'user_mobile',
-            width: 100,
             placeholder: '请输入用户手机号',
             initialValue: ''
         },
         {
             type: 'DatePicker',
-            label: '请选择入职日期',
+            label: '入职日期',
             field: 'user_date',
             width: 100,
-            placeholder: '请输入日期',
-            initialValue: ''
+            placeholder: '请选择入职日期',
+            initialValue: null
+        }]
+
+    columns = [
+        {
+            title: 'id',
+            dataIndex: 'id',
+            width: 80
+        },
+        {
+            title: '用户名',
+            dataIndex: 'userName',
+            width: 80
+        },
+        {
+            title: '性别',
+            dataIndex: 'sex',
+            width: 80,
+            render(sex) {
+                return sex === 1 ? '男' : '女'
+            }
+        },
+        {
+            title: '状态',
+            dataIndex: 'state',
+            width: 80,
+            render(state) {
+                return dictionary['state'][state];
+            }
+        },
+        {
+            title: '爱好',
+            dataIndex: 'interest',
+            width: 80,
+            render(interest) {
+                return dictionary['interest'][interest];
+            }
+        },
+        {
+            title: '生日',
+            width: 100,
+            dataIndex: 'birthday'
+        },
+        {
+            title: '地址',
+            width: 120,
+            dataIndex: 'address'
+        },
+        {
+            title: '早起时间',
+            dataIndex: 'time',
+            width: 80
         }
-    ];
+    ]
 
     componentDidMount() {
         this.requestList();
@@ -55,12 +104,13 @@ export default class User extends React.Component {
     requestList() {
         let self = this;
         this.setState({
-            loading: true
+            loading: true,
+            dataSource: []
         });
 
         axios.ajax({
-            url: '/user/list',
-            data: this.params,
+            url: '/table/list',
+            data: this.params
         }).then((res) => {
             let data = res.data;
             data.rows.map((item, index) => {
@@ -77,124 +127,112 @@ export default class User extends React.Component {
         });
     }
 
-    // 表单提交
     handleFormSubmit = (params) => {
         this.params = params;
         this.params.page = 1;
         this.requestList();
     }
 
-    // 操作
     handleOperate = (type) => {
         if (type === 'add') {
             this.setState({
                 type,
-                isModalVisible: true,
+                isVisibleModal: true,
                 title: '创建员工'
             })
         }
     }
 
+    onRadioSelect = (selectedRows) => {
+        console.log(selectedRows)
+    }
+
     render() {
-        const columns = [
-            {
-                title: 'id',
-                dataIndex: 'id'
-            },
-            {
-                title: '用户名',
-                dataIndex: 'userName'
-            },
-            {
-                title: '性别',
-                dataIndex: 'sex',
-                render(sex) {
-                    return sex === 1 ? '男' : '女'
-                }
-            },
-            {
-                title: '状态',
-                dataIndex: 'state',
-                render(state) {
-                    return dictionary.state[state];
-                }
-            },
-            {
-                title: '爱好',
-                dataIndex: 'interest',
-
-                render(interest) {
-                    return dictionary.interest[interest];
-                }
-            },
-            {
-                title: '生日',
-                dataIndex: 'birthday'
-            },
-            {
-                title: '练习地址',
-                dataIndex: 'address'
-            },
-            {
-                title: '早起时间',
-                dataIndex: 'time'
-            }
-        ];
-
         return (
             <Spin spinning={this.state.loading}>
                 <Card>
-                    <BaseForm formList={this.formList} formSubmit={this.handleFormSubmit}></BaseForm>
+                    <BaseForm formList={this.formList} formSubmit={this.handleFormSubmit}/>
                 </Card>
                 <Card className="opertate-wrap" style={{marginTop: 10, borderBottom: 0}}>
-                    <Button icon="plus" onClick={() => this.handleOperate('add')}>创建员工</Button>
-                    <Button icon="edit" onClick={() => this.handleOperate()}>编辑员工</Button>
-                    <Button icon="code" onClick={() => this.handleOperate()}>员工详情</Button>
-                    <Button icon="delete" style={{marginLeft: 10}} onClick={() => this.handleOperate()}>删除员工</Button>
+                    <Button type="primary" icon="plus" onClick={() => this.handleOperate('add')}>创建员工</Button>
+                    <Button type="primary" icon="edit" onClick={() => this.handleOperate('edit')}>编辑员工</Button>
+                    <Button type="primary" onClick={() => this.handleOperate('detail')}>员工详情</Button>
+                    <Button type="primary" icon="delete" onClick={() => this.handleOperate('delete')}>删除员工</Button>
                 </Card>
-                <Card>
-                    <Table
+                <div className="content-wrap" style={{borderTop: 0}}>
+                    <BaseTable
+                        type="radio"
                         bordered
-                        columns={columns}
+                        columns={this.columns}
                         dataSource={this.state.dataSource}
+                        onSelect={this.onRadioSelect}
                         pagination={this.state.pagination}
                     />
-                </Card>
-
+                </div>
                 <Modal
                     title={this.state.title}
-                    visible={this.state.isModalVisible}
-                    onOk={this.handleFormSubmit}
+                    width={360}
+                    visible={this.state.isVisibleModal}
                     onCancel={() => {
                         this.setState({
-                            isModalVisible: false
+                            isVisibleModal: false
                         })
                     }}
-                    width={600}
+                    onOk={this.handleSubmit}
                 >
+                    <OpenCityForm wrappedComponentRef={(inst) => {
+                        this.cityForm = inst
+                    }}/>
                 </Modal>
+
             </Spin>
         )
     }
 }
 
-class UserForm extends React.Component {
+class OpenCityForm extends React.Component {
     render() {
         const {getFieldDecorator} = this.props.form;
-
         const formItemLayout = {
             labelCol: {span: 5},
             wrapperCol: {span: 19}
         }
-
         return (
             <Form layout="horizontal">
-                <FormItem label="用户名" {...formItemLayout}>
+                <FormItem label="选择城市" {...formItemLayout}>
                     {
-                        getFieldDecorator('userName', {
-                            initialValue: ''
+                        getFieldDecorator('city_id', {
+                            initialValue: '1'
                         })(
-                            <Input type="text" placeholder="请输入用户名"/>
+                            <Select>
+                                <Option value="">全部</Option>
+                                <Option value="1">北京市</Option>
+                                <Option value="2">天津市</Option>
+                            </Select>
+                        )
+                    }
+                </FormItem>
+                <FormItem label="运营模式" {...formItemLayout}>
+                    {
+                        getFieldDecorator('op_mode', {
+                            initialValue: '1'
+                        })(
+                            <Select>
+                                <Option value="1">自营</Option>
+                                <Option value="2">加盟</Option>
+                            </Select>
+                        )
+                    }
+                </FormItem>
+                <FormItem label="用车模式" {...formItemLayout}>
+                    {
+                        getFieldDecorator('use_mode', {
+                            initialValue: '1'
+                        })(
+                            <Select>
+                                <Option value="1">指定停车点</Option>
+                                <Option value="2">禁停区</Option>
+                            </Select>
                         )
                     }
                 </FormItem>
@@ -203,3 +241,4 @@ class UserForm extends React.Component {
     }
 }
 
+OpenCityForm = Form.create()(OpenCityForm);

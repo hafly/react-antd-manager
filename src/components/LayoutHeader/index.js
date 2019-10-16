@@ -5,6 +5,10 @@ import axios from '../../utils/axios';
 import './index.less';
 
 const Header = Layout.Header;
+
+/**
+ * 页头组件
+ */
 export default class LayoutHeader extends React.Component {
     state = {};
 

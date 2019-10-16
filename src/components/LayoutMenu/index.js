@@ -6,6 +6,10 @@ import './index.less';
 
 const Sider = Layout.Sider;
 const SubMenu = Menu.SubMenu;
+
+/**
+ * 菜单组件
+ */
 export default class LayoutMenu extends React.Component {
     state = {
         menuTreeNode: []

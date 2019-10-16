@@ -1,6 +1,10 @@
 import React from 'react';
 import {Table} from 'antd';
 
+/**
+ * 基础表格
+ * 将selectedRowKeys封装在内部
+ */
 export default class BaseTable extends React.Component {
     state = {
         selectedRowKeys: []

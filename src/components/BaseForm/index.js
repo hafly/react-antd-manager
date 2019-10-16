@@ -5,6 +5,9 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const {RangePicker} = DatePicker;
 
+/**
+ * 查询表单
+ */
 class BaseForm extends React.Component {
     // 构建表单
     initFormList() {
