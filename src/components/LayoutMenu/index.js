@@ -27,13 +27,13 @@ export default class LayoutMenu extends React.Component {
         return data.map((item) => {
             if (item.children) {
                 return (
-                    <SubMenu title={item.title} key={item.key}>
+                    <SubMenu title={item.title} key={item.url}>
                         {this.renderMenu(item.children)}
                     </SubMenu>
                 )
             }
-            return <Menu.Item title={item.title} key={item.key}>
-                <NavLink to={item.key}>{item.title}</NavLink>
+            return <Menu.Item title={item.title} key={item.url}>
+                <NavLink to={item.url}>{item.title}</NavLink>
             </Menu.Item>
         });
     }
