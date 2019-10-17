@@ -70,10 +70,6 @@ const menuList = [
         ]
     },
     {
-        title: '富文本',
-        url: '/admin/rich'
-    },
-    {
         title: '城市管理',
         url: '/admin/city'
     },
@@ -116,6 +112,10 @@ const menuList = [
                 url: '/admin/chart/pie'
             },
         ]
+    },
+    {
+        title: '富文本',
+        url: '/admin/rich'
     },
     {
         title: '权限设置',

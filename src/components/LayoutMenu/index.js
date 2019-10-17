@@ -45,7 +45,7 @@ export default class LayoutMenu extends React.Component {
                     <img src="/assets/logo-ant.svg" alt=""/>
                     <h1>Ant Design</h1>
                 </div>
-                <Menu theme="light" mode="inline">
+                <Menu theme="light" mode="inline" defaultSelectedKeys={window.location.pathname}>
                     {this.state.menuTreeNode}
                 </Menu>
             </Sider>
