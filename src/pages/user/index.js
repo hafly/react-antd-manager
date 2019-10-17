@@ -29,7 +29,6 @@ export default class User extends React.Component {
             type: 'Input',
             label: '用户名',
             field: 'user_name',
-            width: 100,
             placeholder: '请输入用户名称',
             initialValue: ''
         },
@@ -44,10 +43,10 @@ export default class User extends React.Component {
             type: 'DatePicker',
             label: '入职日期',
             field: 'user_date',
-            width: 100,
             placeholder: '请选择入职日期',
             initialValue: null
-        }]
+        }
+    ]
 
     columns = [
         {

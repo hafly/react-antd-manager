@@ -82,10 +82,7 @@ export default class Detail extends React.Component {
                 strokeOpacity: 1
             })
             map.addOverlay(polyline);
-
             map.centerAndZoom(endPoint, 11);
-
-
         }
     }
 

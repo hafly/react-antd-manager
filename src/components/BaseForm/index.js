@@ -17,10 +17,10 @@ class BaseForm extends React.Component {
 
         if (formList && formList.length > 0) {
             formList.forEach((item) => {
-                let label = item.label;
-                let field = item.field;
+                let field = item.field; // 表单元素name（必要）
+                let label = item.label || '';
                 let initialValue = item.initialValue || '';
-                let width = item.width;
+                let width = item.width || 'auto';
 
                 // 输入框
                 if (item.type === 'Input') {
@@ -30,7 +30,7 @@ class BaseForm extends React.Component {
                                 getFieldDecorator(field, {
                                     initialValue: initialValue
                                 })(
-                                    <Input type="text" placeholder={item.placeholder}/>
+                                    <Input type="text" placeholder={item.placeholder} style={{width: width}}/>
                                 )
                             }
                         </FormItem>
@@ -60,7 +60,7 @@ class BaseForm extends React.Component {
                                 getFieldDecorator(field, {
                                     initialValue: initialValue || null
                                 })(
-                                    <DatePicker placeholder={item.placeholder}/>
+                                    <DatePicker placeholder={item.placeholder} style={{width: width}}/>
                                 )
                             }
                         </FormItem>
@@ -74,7 +74,7 @@ class BaseForm extends React.Component {
                                 getFieldDecorator(field, {
                                     initialValue: initialValue || null
                                 })(
-                                    <RangePicker/>
+                                    <RangePicker style={{width: width}}/>
                                 )
                             }
                         </FormItem>
