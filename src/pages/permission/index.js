@@ -277,7 +277,6 @@ export default class Permission extends React.Component {
 }
 
 class RoleAddForm extends React.Component {
-
     render() {
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {

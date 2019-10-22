@@ -3,6 +3,7 @@ import {Layout, Breadcrumb} from 'antd';
 import LayoutMenu from './components/LayoutMenu';
 import LayoutHeader from './components/LayoutHeader';
 import LayoutFooter from './components/LayoutFooter';
+import {connect} from 'react-redux';
 import './styles/admin.less';
 
 const {Content} = Layout;
@@ -10,7 +11,7 @@ const {Content} = Layout;
 /**
  * admin页面
  */
-export default class Admin extends React.Component {
+class Admin extends React.Component {
     render() {
         return (
             <Layout>
@@ -23,9 +24,9 @@ export default class Admin extends React.Component {
 
                     {/*面包屑*/}
                     <Breadcrumb className="ant-breadcrumb">
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>List</Breadcrumb.Item>
-                        <Breadcrumb.Item>App</Breadcrumb.Item>
+                        {
+                            this.props.breadcrumbList.map((item) => <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>)
+                        }
                     </Breadcrumb>
 
                     {/*主要内容*/}
@@ -40,3 +41,11 @@ export default class Admin extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        breadcrumbList: state.breadcrumbList
+    }
+}
+
+export default connect(mapStateToProps)(Admin);

@@ -171,7 +171,7 @@ class pageRegister extends React.Component {
                                 getFieldDecorator('address', {
                                     initialValue: '北京市海淀区奥林匹克公园'
                                 })(
-                                    <TextArea autosize={{minRows: 2, maxRows: 6}}/>
+                                    <TextArea autoSize={{minRows: 2, maxRows: 6}}/>
                                 )
                             }
                         </FormItem>
@@ -190,6 +190,7 @@ class pageRegister extends React.Component {
                                         showUploadList={false}
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                         onChange={this.handleChange}
+                                        fileList={[]}
                                     >
                                         {this.state.userImg ? <img src={this.state.userImg} alt=""/> : <Icon type="plus"/>}
                                     </Upload>
@@ -199,7 +200,7 @@ class pageRegister extends React.Component {
                         <FormItem {...offsetLayout} style={{marginBottom: 0}}>
                             {
                                 getFieldDecorator('protocol')(
-                                    <Checkbox>我已经阅读过<a href="#/admin/home">AntD协议</a></Checkbox>
+                                    <Checkbox checked={false}>我已经阅读过<a href="#/admin/home">AntD协议</a></Checkbox>
                                 )
                             }
                         </FormItem>
