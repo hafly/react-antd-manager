@@ -19,7 +19,7 @@ export default class User extends React.Component {
         isVisibleModal: false,
         userInfo: {}
     }
-
+    selectedRow = undefined;
     params = {
         page: 1
     }
@@ -99,8 +99,6 @@ export default class User extends React.Component {
             width: 80
         }
     ]
-
-    selectedRow = undefined;
 
     componentDidMount() {
         this.requestList();
@@ -272,9 +270,11 @@ export default class User extends React.Component {
                     onOk={this.showModalOperateOk}
                     {...footer}
                 >
-                    <UserForm type={this.state.type} userInfo={this.state.userInfo} wrappedComponentRef={(inst) => {
-                        this.userForm = inst
-                    }}/>
+                    <UserForm type={this.state.type}
+                              userInfo={this.state.userInfo}
+                              wrappedComponentRef={(inst) => {
+                                  this.userForm = inst
+                              }}/>
                 </Modal>
             </Spin>
         )

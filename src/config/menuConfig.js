@@ -5,7 +5,7 @@ const menuList = [
     },
     {
         title: 'UI',
-        url: '/ui',
+        url: '/admin/ui',
         children: [
             {
                 title: '按钮',
@@ -43,7 +43,7 @@ const menuList = [
     },
     {
         title: '表单',
-        url: '/form',
+        url: '/admin/form',
         children: [
             {
                 title: '登录',
@@ -57,7 +57,7 @@ const menuList = [
     },
     {
         title: '表格',
-        url: '/table',
+        url: '/admin/table',
         children: [
             {
                 title: '基础表格',

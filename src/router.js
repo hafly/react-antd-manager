@@ -28,7 +28,8 @@ import BikeMap from './pages/map/bikeMap';
 import ChartBar from './pages/chart/bar';
 import ChartLine from './pages/chart/line';
 import ChartPie from './pages/chart/pie';
-import Rich from './pages/rich'
+import Rich from './pages/rich';
+import Permission from './pages/permission';
 import NoMatch from './pages/nomatch';
 
 export default class IRouter extends React.Component {
@@ -62,6 +63,7 @@ export default class IRouter extends React.Component {
                                     <Route path="/admin/chart/line" component={ChartLine}/>
                                     <Route path="/admin/chart/pie" component={ChartPie}/>
                                     <Route path="/admin/rich" component={Rich}/>
+                                    <Route path="/admin/permission" component={Permission}/>
                                     <Route component={NoMatch}/>
                                 </Switch>
                             </Admin>
