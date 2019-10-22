@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {createBrowserHistory} from 'history';
 import {ConfigProvider} from 'antd';
 import 'moment/locale/zh-cn';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -40,7 +41,7 @@ export default class IRouter extends React.Component {
                     <App>
                         <Route path="/login" component={Login}/>
                         <Route path="/admin" render={() =>
-                            <Admin>
+                            <Admin history={createBrowserHistory()}>
                                 <Switch>
                                     <Route path="/admin/home" component={Home}/>
                                     <Route path="/admin/ui/buttons" component={Buttons}/>

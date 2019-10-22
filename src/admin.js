@@ -15,7 +15,7 @@ export default class Admin extends React.Component {
         return (
             <Layout>
                 {/*目录*/}
-                <LayoutMenu/>
+                <LayoutMenu history={this.props.history}/>
 
                 <Layout style={{minHeight: '100vh', overflowY: 'auto'}}>
                     {/*头部*/}
