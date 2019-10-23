@@ -7,7 +7,7 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/legend';
-import ReactEachrts from 'echarts-for-react';
+import ReactEachrts from 'echarts-for-react/lib/core';
 import themeLight from "./themeLight";
 
 export default class Bar extends React.Component {
@@ -125,13 +125,13 @@ export default class Bar extends React.Component {
         return (
             <div>
                 <Card title="折线图一">
-                    <ReactEachrts option={this.getOption()} theme="theme" style={{height: 350}}/>
+                    <ReactEachrts echarts={echarts} option={this.getOption()} theme="theme" style={{height: 350}}/>
                 </Card>
                 <Card title="折线图二">
-                    <ReactEachrts option={this.getOption2()} theme="theme" style={{height: 350}}/>
+                    <ReactEachrts echarts={echarts} option={this.getOption2()} theme="theme" style={{height: 350}}/>
                 </Card>
                 <Card title="折线图三">
-                    <ReactEachrts option={this.getOption3()} theme="theme" style={{height: 350}}/>
+                    <ReactEachrts echarts={echarts} option={this.getOption3()} theme="theme" style={{height: 350}}/>
                 </Card>
             </div>
         )
