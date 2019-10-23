@@ -27,7 +27,6 @@ class LayoutMenu extends React.Component {
             menuTreeNode
         });
         dispatch(switchMenu(this.breadcrumbList));
-        console.log(this.openKeys)
     }
 
     handleClick = ({item, key}) => {

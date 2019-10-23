@@ -41,4 +41,5 @@ router.js----路由管理
 4.通过打包插件分析，打包后有3.6MB多，发现antd并没有实现按需加载，现已实现，需要引入babel-plugin-import；  
 antd的icon生成的dist比较大，有600多k，通过官方github上的方法已解决按需加载；  
 发现echarts也没实现按需加载，echarts-for-react也要按需加载才能实现。  
-经过上面的打包优化后，打包只有2.1MB了。
+经过上面的打包优化后，打包只有2.1MB了。  
+5.现在代码全部打包到一个包里的，首次加载速度可能较慢，通过Route-based code splitting 打包代码拆分，进一步提高首次加载速度。  
