@@ -16,8 +16,8 @@
  
 ### 项目目录结构
 
+/public/assets----存储静态图片资源和共用icon图标(放在public中不会被打包到js)  
 src目录
-assets----存储静态图片资源和共用icon图标  
 config----配置文件  
 components----存储共用组件  
 pages----业务页面入口和常用模板  

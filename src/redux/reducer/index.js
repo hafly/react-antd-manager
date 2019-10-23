@@ -15,7 +15,6 @@ export default function (state = initialState, action) {
                 ...state,
                 breadcrumbList: action.breadcrumbList
             }
-            break;
         default:
             return {
                 ...state

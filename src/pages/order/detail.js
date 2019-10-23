@@ -55,11 +55,11 @@ export default class Detail extends React.Component {
             let startPoint = new BMap.Point(first.lon, first.lat);
             let endPoint = new BMap.Point(last.lon, last.lat);
 
-            let startIcon = new BMap.Icon('/assets/start_point.png', new BMap.Size(36, 42), {
+            let startIcon = new BMap.Icon('./assets/start_point.png', new BMap.Size(36, 42), {
                 imageSize: new BMap.Size(36, 42),
                 anchor: BMap.Size(36, 42)
             });
-            let endIcon = new BMap.Icon('/assets/end_point.png', new BMap.Size(36, 42), {
+            let endIcon = new BMap.Icon('./assets/end_point.png', new BMap.Size(36, 42), {
                 imageSize: new BMap.Size(36, 42),
                 anchor: BMap.Size(36, 42)
             });

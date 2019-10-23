@@ -81,11 +81,11 @@ export default class BikeMap extends React.Component {
         map.centerAndZoom(endPoint, 11);
 
         // 绘制起点和终点
-        let startPointIcon = new BMap.Icon('/assets/start_point.png', new BMap.Size(36, 42), {
+        let startPointIcon = new BMap.Icon('./assets/start_point.png', new BMap.Size(36, 42), {
             imageSize: new BMap.Size(36, 42),
             anchor: BMap.Size(18, 42)
         });
-        let endPointIcon = new BMap.Icon('/assets/end_point.png', new BMap.Size(36, 42), {
+        let endPointIcon = new BMap.Icon('./assets/end_point.png', new BMap.Size(36, 42), {
             imageSize: new BMap.Size(36, 42),
             anchor: BMap.Size(18, 42)
         });
@@ -124,7 +124,7 @@ export default class BikeMap extends React.Component {
 
         // 添加地图中的自行车图标
         let bikeList = data.bike_list;
-        let bikeIcon = new BMap.Icon('/assets/bike.jpg', new BMap.Size(36, 42), {
+        let bikeIcon = new BMap.Icon('./assets/bike.jpg', new BMap.Size(36, 42), {
             imageSize: new BMap.Size(36, 42),
             anchor: BMap.Size(18, 42)
         });

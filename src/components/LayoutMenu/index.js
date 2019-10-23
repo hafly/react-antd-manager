@@ -39,7 +39,7 @@ class LayoutMenu extends React.Component {
     }
 
     getParentName(item) {
-        if (item.parentMenu.isRootMenu == false) {
+        if (item.parentMenu.isRootMenu === false) {
             this.breadcrumbList.unshift(item.parentMenu.props.title);
             this.getParentName(item.parentMenu.props);
         }
@@ -48,7 +48,7 @@ class LayoutMenu extends React.Component {
     // 构造目录
     renderMenu(data) {
         return data.map((item) => {
-            if (this.props.history.location.pathname.indexOf(item.url) != -1) {
+            if (this.props.history.location.pathname.indexOf(item.url) !== -1) {
                 this.breadcrumbList.push(item.title);
                 this.openKeys.push(item.url);
             }
