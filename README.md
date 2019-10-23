@@ -1,68 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## React+antd后台模板
 
-## Available Scripts
+学习了[《React全家桶+AntD共享单车后台管理系统》](https://coding.imooc.com/learn/list/236.html)，并同步实现教程中的功能。  
+菜单、路由和导航和基础组件与老师的略有不同，通过自己的思路不断优化完善。  
 
-In the project directory, you can run:
+这个项目完全是自己手写，而不是搬的源码。在工作中已经用antd-pro开发了一个项目了，学习这个教程的初衷是全面熟悉antd组件和React，扎实基础，并希望通过学习其它项目接触更多的编程思想。  
 
-### `npm start`
+### 技术栈
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ - react
+ - antd
+ - react-router
+ - axios
+ - redux
+ - webpack
+ 
+### 项目目录结构
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+src目录
+assets----存储静态图片资源和共用icon图标  
+config----配置文件  
+components----存储共用组件  
+pages----业务页面入口和常用模板  
+redux----状态管理  
+styles----公共样式  
+utils----工具函数  
+admin.js----admin路由页面  
+common.js----common路由页面
+router.js----路由管理
 
-### `npm test`
+### 收获
+对antd组件更加熟练，并封装了表单、表格组件和Layout布局组件  
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 后台实现
+该项目涉及后台，使用的是本地部署的easymock，有机会再上传到云平台。
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### 后续优化
+1.本想用原生的fetch替代axios。查资料才知道fetch还有不少问题，而axios既提供了并发的封装，也没有fetch的各种问题，而且体积也较小，最终还是采用axios。  
