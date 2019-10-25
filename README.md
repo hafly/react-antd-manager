@@ -42,4 +42,5 @@ router.js----路由管理
 antd的icon生成的dist比较大，有600多k，通过官方github上的方法已解决按需加载；  
 发现echarts也没实现按需加载，echarts-for-react也要按需加载才能实现。  
 经过上面的打包优化后，打包只有2.1MB了。  
-5.现在代码全部打包到一个包里的，首次加载速度可能较慢，通过Route-based code splitting 打包代码拆分，进一步提高首次加载速度。  
+5.现在代码全部打包到一个包里的，首次加载速度可能较慢，通过 Suspense, lazy 打包代码拆分，进一步提高首次加载速度。
+6.使用lazy加载的代码切换路由看起来有些闪动，改成react-loadable + nprogress在加载页面，页面看起来无缝切换更流畅。
