@@ -1,9 +1,10 @@
 import React from 'react';
 import {Layout, Menu} from 'antd';
 import {NavLink} from 'react-router-dom';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {switchMenu} from "../../redux/action";
-import MenuConfig from '../../config/menuConfig';
+import {updateBreadcrumb} from "@/redux/action/baseAction";
+import MenuConfig from '@/config/menuConfig';
 import './index.less';
 
 const Sider = Layout.Sider;
@@ -12,6 +13,10 @@ const SubMenu = Menu.SubMenu;
 /**
  * 菜单组件
  */
+@connect(
+    () => ({}), // 第一个参数是state
+    (dispatch) => bindActionCreators({updateBreadcrumb}, dispatch)
+)
 class LayoutMenu extends React.Component {
     state = {
         menuTreeNode: []
@@ -21,20 +26,26 @@ class LayoutMenu extends React.Component {
     openKeys = [];
 
     componentWillMount() {
-        const {dispatch} = this.props;
         const menuTreeNode = this.renderMenu(MenuConfig);
         this.setState({
             menuTreeNode
         });
-        dispatch(switchMenu(this.breadcrumbList));
+        this.props.updateBreadcrumb(this.breadcrumbList);
+
+        // 等同于
+        // const {dispatch} = this.props;
+        // dispatch(updateBreadcrumb(this.breadcrumbList));
+        // dispatch({
+        //     type: 'base/updateBreadcrumb',
+        //     breadcrumbList: this.breadcrumbList
+        // })
     }
 
-    handleClick = ({item, key}) => {
-        const {dispatch} = this.props;
+    handleClick = ({item}) => {
         this.breadcrumbList = [];
         this.breadcrumbList.push(item.props.title);
         this.getParentName(item.props);
-        dispatch(switchMenu(this.breadcrumbList));
+        this.props.updateBreadcrumb(this.breadcrumbList);
     }
 
     getParentName(item) {
@@ -83,4 +94,4 @@ class LayoutMenu extends React.Component {
     }
 }
 
-export default connect()(LayoutMenu);
+export default LayoutMenu;

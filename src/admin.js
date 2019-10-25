@@ -11,6 +11,10 @@ const {Content} = Layout;
 /**
  * admin页面
  */
+const store = connect(
+    (state) => ({ breadcrumbList: state.baseReducer.breadcrumbList})
+)
+@store
 class Admin extends React.Component {
     render() {
         return (
@@ -42,10 +46,4 @@ class Admin extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        breadcrumbList: state.breadcrumbList
-    }
-}
-
-export default connect(mapStateToProps)(Admin);
+export default Admin

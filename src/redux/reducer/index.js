@@ -1,23 +1,8 @@
-/**
- * Reducer 数据处理
- */
+import { combineReducers } from 'redux';
+import {baseReducer} from "./baseReducer";
 
-import {type} from '../action';
+const rootReducer = combineReducers({
+    baseReducer: baseReducer,
+})
 
-const initialState = {
-    breadcrumbList: []
-}
-
-export default function (state = initialState, action) {
-    switch (action.type) {
-        case type.SWITCH_MENU:
-            return {
-                ...state,
-                breadcrumbList: action.breadcrumbList
-            }
-        default:
-            return {
-                ...state
-            };
-    }
-}
+export default rootReducer;
