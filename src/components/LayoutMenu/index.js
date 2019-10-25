@@ -66,7 +66,7 @@ class LayoutMenu extends React.Component {
 
     render() {
         return (
-            <Sider className="ant-layout-menu-sider">
+            <Sider className="ant-layout-menu-sider" width={256}>
                 <div className="ant-layout-logo">
                     <img src="/assets/logo-ant.svg" alt=""/>
                     <h1>Ant Design</h1>
