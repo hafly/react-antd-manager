@@ -20,7 +20,7 @@ export default class LayoutHeader extends React.Component {
         });
 
         this.setSysTime();
-        this.getWeatherAPIData();
+        // this.getWeatherAPIData();
 
         setInterval(() => {
             self.setSysTime();

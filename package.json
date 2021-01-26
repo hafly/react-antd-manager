@@ -6,7 +6,8 @@
     "start": "set PORT=3001 && node scripts/start.js",
     "build": "node scripts/build.js",
     "analyze": "cross-env ANALYZE=1 npm run build",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "gh-pages": "gh-pages -d build"
   },
   "dependencies": {
     "@babel/core": "7.4.3",
